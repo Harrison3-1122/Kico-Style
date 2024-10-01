@@ -125,6 +125,9 @@ Array.prototype.remove = function (value) {
     };
 
     KStyle.notice = function (content, attr) {
+        content = content.replace(/\n/g, '<br>');
+        content = handleTemplate(content);
+
         var item = KStyle.create("div", {class: "ks-notice", html: "<span class='content'>" + content + "</span>", parent: notice.wrap});
 
         notice.list.push(item);
@@ -161,6 +164,12 @@ Array.prototype.remove = function (value) {
             }, 300);
         }
     };
+
+    function handleTemplate(content) {
+        return content.replace(/\$\{([^\}]+)\}/g, function (match, variable) {
+            return eval(variable);
+        });
+    }
 
     // 灯箱
     var image_box = {
